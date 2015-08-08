@@ -30,6 +30,15 @@
         box-shadow: #888 1px 2px 4px;
       }
 
+      #debug {
+        border: 1px solid #ccc;
+        font-family: monospace;
+        border-radius: 3px;
+        padding: 20px;
+        background-color: #f5f5f5;
+        margin: 20px 0;
+      }
+
       .green { background-color: green; }
       .orange { background-color: orange; }
       .blue { background-color: blue; }
@@ -105,8 +114,24 @@
           </tbody>
         </table>
 
+        <p >
+          Are you not seeing the correct color in the sample box? <br >
+        </p>
+
+        <p id="debug" >
+          #debug
+        </p>
+
+        <p >
+          Copy the code above and <a href="https://github.com/rogeriotaques/detectr.js/issues"
+          target="_blank" >open an issue on Github</a>,<br >telling me what CSS rules
+          are expected to be defined.
+        </p>
       </fieldset>
     </div>
 
+    <script type="text/javascript">
+      document.getElementById('debug').innerHTML = window.navigator.userAgent;
+    </script>
   </body>
 </html>
