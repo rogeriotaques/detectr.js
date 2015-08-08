@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Detectr.js - Sample page.</title>
+
+    <script src="../src/detectr.min.js"></script>
+
+    <style type="text/css" >
+
+      table td:first-child {
+        width: 20px;
+      }
+
+      .container {
+        width: 700px;
+        margin: 0 auto;
+      }
+
+      .sample {
+        margin: 20px;
+        height: 50px;
+        line-height: 50px;
+        padding: 0 20px;
+        background-color: #e2e2e2;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        box-shadow: #888 1px 2px 4px;
+      }
+
+      .green { background-color: green; }
+      .orange { background-color: orange; }
+      .blue { background-color: blue; }
+      .lightblue { background-color: lightblue; }
+      .red { background-color: red; }
+      .gray { background-color: #e2e2e2;}
+
+      .chrome .sample { background-color: green; color: white;}
+      .chrome .sample::before { content: "Chrome"; }
+      .firefox .sample { background-color: orange;}
+      .firefox .sample::before { content: "Firefox"; }
+      .ie .sample { background-color: blue; color: white;}
+      .ie .sample::before { content: "Internet Explorer"; }
+      .safari .sample { background-color: lightblue;}
+      .safari .sample::before { content: "Safari"; }
+      .opera .sample { background-color: red; color: white;}
+      .opera .sample::before { content: "Opera"; }
+    </style>
+  </head>
+  <body >
+
+    <div class="container" >
+      <h1 >Detectr.js Sample Page</h1>
+
+      <p >
+        This plugin is a very small javascript library which gives you the ability
+        to write clever and specific CSS rules to refine your website design for
+        each different browser, platform, device and operating system.
+      </p>
+
+      <p >
+        by Rogerio Taques. <br >
+        @see <a href="http://github.com/rogeriotaques/detectr.js" >http://github.com/rogeriotaques/detectr.js</a>
+      </p>
+
+      <div class="sample"></div>
+
+      <fieldset >
+        <legend >Description</legend>
+
+        <p >
+          You might see the above box in different colors, accordin on the
+          browser you're using. Check in the table below if the color you're
+          seeing matches with the browser you're using.
+        </p>
+
+        <table >
+          <tbody >
+            <tr>
+              <td class="green" >&nbsp;</td>
+              <td >Google Chrome</td>
+            </tr>
+            <tr>
+              <td class="orange" >&nbsp;</td>
+              <td >Firefox</td>
+            </tr>
+            <tr>
+              <td class="blue" >&nbsp;</td>
+              <td >Microsoft Internet Explorer</td>
+            </tr>
+            <tr>
+              <td class="lightblue" >&nbsp;</td>
+              <td >Safari</td>
+            </tr>
+            <tr>
+              <td class="red" >&nbsp;</td>
+              <td >Opera</td>
+            </tr>
+            <tr>
+              <td class="gray" >&nbsp;</td>
+              <td >Any other browser ...</td>
+            </tr>
+          </tbody>
+        </table>
+
+      </fieldset>
+    </div>
+
+  </body>
+</html>
