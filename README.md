@@ -2,19 +2,25 @@
 
 Empower web sites and apps design through clever CSS selectors.
 
-This plugin is a very small javascript library which gives you the ability to write clever and specific CSS rules to refine your website design for each different browser, platform, device and operating system.
+This plugin is a very small javascript library which gives you the ability to
+write clever and specific CSS rules to refine your website design for each
+different browser, platform, device and operating system.
 
-It doesn't has any library dependencies such as: jQuery, Mootools, (...). So, you can use it alone, or combined with those packages.
+It doesn't has any library dependencies such as: jQuery, Mootools, (...). So,
+you can use it alone, or combined with those packages.
 
 ## Get started
 
 ### 1. Get the source code
 
-Start cloning this repository to your local machine, or just download the source-code into any folder of your PC. As an open-source, the source-code is available in its natural format and minified.
+Start cloning this repository to your local machine, or just download the
+source-code into any folder of your PC. As an open-source, the source-code is
+available in its natural format and minified.
 
 ### 2. Copy necessary files
 
-Copy the ```detectr.min.js``` (minified) file to any directory of your website or app. For example:
+Copy the ```detectr.min.js``` (minified) file to any directory of your website
+or app. For example:
 
 ```
 / (root)
@@ -29,7 +35,9 @@ Copy the ```detectr.min.js``` (minified) file to any directory of your website o
 
 Import the library in your HTML files.  
 
-Since it is intended to help you create better designs by empower your control on CSS rules according to used browsers, I strongly recommend you to import Detectr.js within the HEAD tags.
+Since it is intended to help you create better designs by empower your control
+on CSS rules according to used browsers, I strongly recommend you to import
+Detectr.js within the HEAD tags.
 
 E.g:
 
@@ -48,7 +56,9 @@ E.g:
 
 ### 4. Done.
 
-As simple as that. As soon as you complete the 3 steps above and refresh your site in any browser, you will be able to see that many specific classes names were added in the HTML tag of your page.
+As simple as that. As soon as you complete the 3 steps above and refresh your
+site in any browser, you will be able to see that many specific classes names
+were added in the HTML tag of your page.
 
 E.g:
 
@@ -137,7 +147,9 @@ Detectr.js may add the following classes in the HTML tag:
 
 ## Inspiration
 
-This project is based on the Rafael Lima's library "css_browser_selector" (http://rafael.adm.br/css_browser_selector/) which seems to be discontinued since Nov 2nd, 2010.
+This project is based on Rafael Lima's library "css_browser_selector"
+(http://rafael.adm.br/css_browser_selector/) which seems to be discontinued
+since Nov 2nd, 2010.
 
 ## License
 
