@@ -1,4 +1,4 @@
-# Detectr.js (beta)
+# Detectr.js (beta) v1.1
 
 Empower web sites and apps design through clever CSS selectors.
 
@@ -76,6 +76,7 @@ Detectr.js may add the following classes in the HTML tag:
 
 | Class | Remark |
 |-------|--------|
+|.edge  | Microsoft Edge |
 |.ie    | Internet Explorer |
 |.ie{version} | E.g. ie10.  |
 |.webkit | Browsers based on the webkit |

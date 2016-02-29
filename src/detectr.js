@@ -2,7 +2,7 @@
 * Detectr.js
 * @author Rogerio Taques (rogerio.taques@gmail.com)
 * @see http://github.com/rogeriotaques/detectrjs
-* @version 1.0
+* @version 1.1
 *
 * This project is based on the Rafael Lima's work
 * which is called css_browser_selector and seems
@@ -11,7 +11,8 @@
 
 /*
  * Release notes
- * v1.0  - First release. Totally rewritten and new detectings added.
+ * v1.1 - Added support for Microsoft Edge
+ * v1.0 - First release. Totally rewritten and new detectings added.
  */
 
 /*
@@ -68,11 +69,17 @@ SOFTWARE.
               v = '',
               i = d.implementation;
 
-          // detecting browsers
+          // *** detecting browsers ***
           switch ( true ) {
             // internet explorer
-            case (is('msie') && !is('opera') && !is('webtv')):
-              v = (/msie\s(\d+)/.test(ua) ? ' ie' + RegExp.$1 : '');
+            case (is('msie') && !is('opera') && !is('webtv') || is('trident') || is('edge')):
+              if (is('edge')) {
+                v = (/edge\/(\w+)/.test(ua) ? ' edge ie' + RegExp.$1 : ' ie11');
+              } else if (is('msie 8.0') || is('trident/7.0')) {
+                v = ' ie11'
+              } else {
+                v = (/msie\s(\d+)/.test(ua) ? ' ie' + RegExp.$1 : '');
+              }
               r.push('ie' + v);
               break;
             // iron
@@ -123,7 +130,7 @@ SOFTWARE.
               break;
           }
 
-          // detecting O.S
+          // *** detecting O.S ***
           switch ( true ) {
             // macintosh
             case (is('mac') || is('macintosh') || is('darwin')):
@@ -181,7 +188,7 @@ SOFTWARE.
               break;
           }
 
-          // detecting platform
+          // *** detecting platform ***
           switch ( true ) {
             // 64 bits
             case (is('wow64') || is('x64')):
@@ -196,7 +203,7 @@ SOFTWARE.
               r.push('x32');
           }
 
-          // detecting devices
+          // *** detecting devices ***
           switch (true) {
             case (is('j2me')):
               r.push(m + ' j2me');
@@ -209,21 +216,21 @@ SOFTWARE.
               break;
           }
 
-          // detecting touchable devices
+          // *** detecting touchable devices ***
           if (/touch/.test(ua)) {
             r.push('touch');
           }
 
-          // assume that it supports javascript
+          // *** assume that it supports javascript ***
           r.push('js');
 
-          // detect if svg images are supported
+          // *** detect if svg images are supported ***
           r.push(i !== undefined && typeof i.hasFeature === 'function' && i.hasFeature("http://www.w3.org/TR/SVG11/feature#Image", "1.1") ? 'svg' : 'no-svg');
 
-          // detecting retina display
+          // *** detecting retina display ***
           r.push($.devicePixelRatio !== undefined && $.devicePixelRatio > 1 ? 'retina' : 'no-retina');
 
-          // detecting orientation
+          // *** detecting orientation ***
           r.push(ww < wh ? 'portrait' : 'landscape');
 
           return r;
