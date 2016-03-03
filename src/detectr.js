@@ -2,7 +2,7 @@
 * Detectr.js
 * @author Rogerio Taques (rogerio.taques@gmail.com)
 * @see http://github.com/rogeriotaques/detectrjs
-* @version 1.2
+* @version 1.3
 *
 * This project is based on the Rafael Lima's work
 * which is called css_browser_selector and seems
@@ -11,7 +11,8 @@
 
 /*
  * Release notes
- * v1.2 - Start detecting when device runs iOS 
+ * v1.3 - Start detecting Android Stock Browser
+ * v1.2 - Start detecting when device runs iOS
  * v1.1 - Added support for Microsoft Edge
  * v1.0 - First release. Totally rewritten and new detectings added.
  */
@@ -72,8 +73,10 @@ SOFTWARE.
 
           // *** detecting browsers ***
           switch ( true ) {
+
             // internet explorer
             case (is('msie') && !is('opera') && !is('webtv') || is('trident') || is('edge')):
+
               if (is('edge')) {
                 v = (/edge\/(\w+)/.test(ua) ? ' edge ie' + RegExp.$1 : ' ie11');
               } else if (is('msie 8.0') || is('trident/7.0')) {
@@ -81,50 +84,75 @@ SOFTWARE.
               } else {
                 v = (/msie\s(\d+)/.test(ua) ? ' ie' + RegExp.$1 : '');
               }
+
               r.push('ie' + v);
               break;
+
             // iron
             case (is('iron/') || is('iron')):
               v = (/iron\/(\d+)/.test(ua) ? ' iron' + RegExp.$1 : '');
               r.push(w + ' iron' + v);
               break;
+
             // google chrome
             case (is('chrome/') || is('chrome')):
               v = (/chrome\/(\d+)/.test(ua) ? ' chrome' + RegExp.$1 : '');
               r.push(w + ' chrome' + v);
               break;
+
             // firefox
             case (is('firefox/') || is('firefox')):
               v = (/firefox\/(\d+)/.test(ua) ? ' firefox' + RegExp.$1 : '');
               r.push(g + ' firefox' + v);
               break;
+
             // opera
             case (is('opera') || is('opera/')):
               v = (/version(\s|\/)(\d+)/.test(ua) || /opera(\s|\/)(\d+)/.test(ua) ? ' ' + o + RegExp.$2 : '');
               r.push(o + v);
               break;
+
             // konqueror
             case (is('konqueror')):
               r.push('konqueror');
               break;
+
             // blackberry
             case (is('blackberry')):
-              r.push(m + 'blackberry');
+              r.push(m + ' blackberry');
               break;
+
             // android
             case (is('android')):
-              r.push(m + 'android');
+
+              // according to some researches (http://stackoverflow.com/questions/14403766/how-to-detect-the-stock-android-browser)
+              // android stock (native) browsers never went above applewebkit/534.x, then, we can suppose user is using a
+              // native browser in android when the UA contains "android", "mobile", !"google" and !"windows"
+
+              if (is('mobile') && !is('google') && !is('windows')) {
+                // get webkit version
+                var webkit = (/applewebkit\/(\d{1,})/.test(ua) ? RegExp.$1 : false);
+
+                if (webkit && webkit <= 534) {
+                  r.push('android-native');
+                }
+              }
+
+              r.push('android');
               break;
+
             // safari
             case (is('safari/')):
               v = (/version\/(\d+)/.test(ua) || /safari\/(\d+)/.test(ua) ? ' ' + s + RegExp.$1 : '');
               r.push(w + ' ' + s + v);
               break;
+
             // applewebkit
             case (is('applewebkit/') || is('applewebkit')):
               v = (/applewebkit\/(\d+)/.test(ua) ? ' ' + w + RegExp.$1 : '');
               r.push(w + ' ' + v);
               break;
+
             // gecko || mozilla
             case (is('gecko') || is('mozilla/')):
               r.push(g);

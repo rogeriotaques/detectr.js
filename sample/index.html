@@ -45,6 +45,7 @@
       .blue { background-color: blue; }
       .lightblue { background-color: lightblue; }
       .red { background-color: red; }
+      .purple { background-color: purple; }
       .gray { background-color: #e2e2e2;}
 
       .chrome .sample { background-color: green; color: white;}
@@ -57,6 +58,8 @@
       .safari .sample::before { content: "Safari"; }
       .opera .sample { background-color: red; color: white;}
       .opera .sample::before { content: "Opera"; }
+      .android.android-native .sample { background-color: purple; color: white;}
+      .android.android-native .sample::before { content: "Android Stock (Native)"; }
     </style>
   </head>
   <body >
@@ -116,6 +119,10 @@
               <td >Opera</td>
             </tr>
             <tr>
+              <td class="purple" >&nbsp;</td>
+              <td >Android Stock (Native)</td>
+            </tr>
+            <tr>
               <td class="gray" >&nbsp;</td>
               <td >Any other browser ...</td>
             </tr>
@@ -140,7 +147,7 @@
 
     <script type="text/javascript">
       document.getElementById('debug').innerHTML = window.navigator.userAgent;
-      document.getElementById('rendered').innerHTML = window.detectr.split(' ').join(' .');
+      document.getElementById('rendered').innerHTML = '.' + window.detectr.split(' ').join(' .');
     </script>
   </body>
 </html>
