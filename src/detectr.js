@@ -2,7 +2,7 @@
 * Detectr.js
 * @author Rogerio Taques (rogerio.taques@gmail.com)
 * @see http://github.com/rogeriotaques/detectrjs
-* @version 1.1
+* @version 1.2
 *
 * This project is based on the Rafael Lima's work
 * which is called css_browser_selector and seems
@@ -11,6 +11,7 @@
 
 /*
  * Release notes
+ * v1.2 - Start detecting when device runs iOS 
  * v1.1 - Added support for Microsoft Edge
  * v1.0 - First release. Totally rewritten and new detectings added.
  */
@@ -132,11 +133,31 @@ SOFTWARE.
 
           // *** detecting O.S ***
           switch ( true ) {
+            // ios
+            case (is('iphone')):
+              v = (/iphone\sos\s(\d{1,2})/.test(ua) ? ' ios' + RegExp.$1 : '');
+
+              // For some reason when it's iOS8, userAgent comes like OS 10_10
+              // what returns a wrong version, then we need to match it against
+              // another value
+              if (v === ' ios10') {
+                var vv = (/(\d{1,2})/.test(v) ? RegExp.$1 : 0);
+                var vd = (/\sversion\/(\d{1,2})/.test(ua) ? RegExp.$1 : '');
+
+                if (parseInt(vv) > parseInt(vd)) {
+                  v = ' ios' + vd;
+                }
+              }
+
+              r.push('ios' + v);
+              break;
+
             // macintosh
             case (is('mac') || is('macintosh') || is('darwin')):
               v = (/mac\sos\sx\s(\d{1,2}\_\d{1,2})/.test(ua) ? ' osx' + RegExp.$1 : '');
               r.push('mac' + v);
               break;
+
             // windows
             case (is('windows') || is('win')):
               v = (/windows\s(nt\s{0,1})(\d{1,2}\.\d)/.test(ua) ? '' + RegExp.$2 : '');
@@ -246,6 +267,6 @@ SOFTWARE.
     return b.join(' ').trim();
   };
 
-  detectr($.navigator.userAgent);
+  window.detectr = detectr($.navigator.userAgent);
 
 }(window));

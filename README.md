@@ -1,4 +1,4 @@
-# Detectr.js (beta) v1.1
+# Detectr.js (beta) v1.2
 
 Empower web sites and apps design through clever CSS selectors.
 
@@ -98,6 +98,7 @@ Detectr.js may add the following classes in the HTML tag:
 |-------|--------|
 |.mac   | Apple Macintosh |
 |.osx{version} | E.g. osx10_10 |
+|.ios{version} | E.g. ios8 |
 |.windows | Microsoft Windows |
 |.win2k | Microsoft Windows 2000 |
 |.win2k.sp1 | Microsoft Windows 2000 SP1 |

@@ -15,7 +15,8 @@
       }
 
       .container {
-        width: 700px;
+        width: 95%;
+        max-width: 700px;
         margin: 0 auto;
       }
 
@@ -77,6 +78,13 @@
       <div class="sample"></div>
 
       <fieldset >
+        <legend >Rendered classes</legend>
+        <div id="rendered" ></div>
+      </fieldset>
+
+      <br  />
+
+      <fieldset >
         <legend >Description</legend>
 
         <p >
@@ -132,6 +140,7 @@
 
     <script type="text/javascript">
       document.getElementById('debug').innerHTML = window.navigator.userAgent;
+      document.getElementById('rendered').innerHTML = window.detectr.split(' ').join(' .');
     </script>
   </body>
 </html>
