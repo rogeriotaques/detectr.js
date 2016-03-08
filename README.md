@@ -1,4 +1,4 @@
-# Detectr.js (beta) v1.3
+# Detectr.js (beta) v1.4
 
 Empower web sites and apps design through clever CSS selectors.
 
@@ -91,7 +91,7 @@ Detectr.js may add the following classes in the HTML tag:
 |.safari | Safari Browser |
 |.safari{version} | E.g. safari12 |
 |.gecko | Browsers based on gecko |
-|.android-native | Native browsers from Android |
+|.android-browser | Android native browsers |
 
 ### Operating Systems
 
@@ -115,6 +115,7 @@ Detectr.js may add the following classes in the HTML tag:
 |.freebsd | Freebsd |
 |.linux | Linux |
 |.android | Android |
+|.bb{version} | E.g. bb10 (for Blackberry 10) |
 
 ### Platform
 

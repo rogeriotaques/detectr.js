@@ -2,7 +2,7 @@
 * Detectr.js
 * @author Rogerio Taques (rogerio.taques@gmail.com)
 * @see http://github.com/rogeriotaques/detectrjs
-* @version 1.3
+* @version 1.4
 *
 * This project is based on the Rafael Lima's work
 * which is called css_browser_selector and seems
@@ -11,6 +11,7 @@
 
 /*
  * Release notes
+ * v1.4 - Bug fix for detecting Android Stock Browser and some improvements
  * v1.3 - Start detecting Android Stock Browser
  * v1.2 - Start detecting when device runs iOS
  * v1.1 - Added support for Microsoft Edge
@@ -42,259 +43,305 @@ SOFTWARE.
 */
 
 (function ($) {
+
   "use strict";
 
-  // whenever the .trim() isn't supported, makes it be
+  /**
+   * Whenever .trim() isn't supported, makes it be.
+   */
   if(typeof String.prototype.trim !== 'function') {
+
     String.prototype.trim = function() {
       return this.replace(/^\s+|\s+$/g, '');
     };
+
   }
 
-  var detectr = function (u) {
+  var detectr = function (userAgent) {
 
-    var d = $.document,
-        h = d.documentElement,
-        ua = u.toLowerCase(),
-        ww = $.outerWidth || h.clientWidth,
-        wh = $.outerHeight || h.clientHeight,
-        g = 'gecko',
-        w = 'webkit',
-        s = 'safari',
-        o = 'opera',
-        m = 'mobile',
-        is = function (t) {
-          return ua.indexOf(t) > -1;
-        },
-        b = function () {
-          var r = [],
-              v = '',
-              i = d.implementation;
+    var
+      doc = $.document,
+      element = doc.documentElement,
+      ua = userAgent.toLowerCase(),
+      winWidth = $.outerWidth || element.clientWidth,
+      winHeight = $.outerHeight || element.clientHeight,
+      gecko = 'gecko',
+      webkit = 'webkit',
+      safari = 'safari',
+      opera = 'opera',
+      mobile = 'mobile',
+      is, detect;
 
-          // *** detecting browsers ***
-          switch ( true ) {
+      /**
+       * Checks if given string is present on the userAgent.
+       * @param  string  str
+       * @return {Boolean}
+       */
+      is = function (str) {
+        return ua.indexOf(str) > -1;
+      };
 
-            // internet explorer
-            case (is('msie') && !is('opera') && !is('webtv') || is('trident') || is('edge')):
+      /**
+       * The core feature ...
+       */
+      detect = function () {
+        var
+          rendered = [],
+          version = '',
+          implementation = doc.implementation;
 
-              if (is('edge')) {
-                v = (/edge\/(\w+)/.test(ua) ? ' edge ie' + RegExp.$1 : ' ie11');
-              } else if (is('msie 8.0') || is('trident/7.0')) {
-                v = ' ie11'
-              } else {
-                v = (/msie\s(\d+)/.test(ua) ? ' ie' + RegExp.$1 : '');
+        // *** Detecting browsers ***
+        switch ( true ) {
+
+          // internet explorer
+          case (is('msie') && !is('opera') && !is('webtv') || is('trident') || is('edge')):
+
+            if (is('edge')) {
+              version = (/edge\/(\w+)/.test(ua) ? ' edge ie' + RegExp.$1 : ' ie11');
+            } else if (is('msie 8.0') || is('trident/7.0')) {
+              version = ' ie11'
+            } else {
+              version = (/msie\s(\d+)/.test(ua) ? ' ie' + RegExp.$1 : '');
+            }
+
+            rendered.push('ie' + version);
+            break;
+
+          // iron
+          case (is('iron/') || is('iron')):
+            version = (/iron\/(\d+)/.test(ua) ? ' iron' + RegExp.$1 : '');
+            rendered.push(webkit + ' iron' + version);
+            break;
+
+          // android
+          case (is('android') || (is('linux') && is('mobile'))):
+
+            // according to some researches (http://stackoverflow.com/questions/14403766/how-to-detect-the-stock-android-browser)
+            // android stock (native) browsers never went above applewebkit/537.x, then, we can suppose user is using a
+            // native browser in android when the UA contains "android", "mobile", !"google" and !"windows"
+
+            if (is('mobile') && !is('google') && !is('windows')) {
+              // get webkit version
+              var wk = (/applewebkit\/(\d{1,})/.test(ua) ? RegExp.$1 : false);
+
+              if (wk && wk < 538) {
+                rendered.push('android-browser');
               }
+            }
 
-              r.push('ie' + v);
-              break;
+            // rendered.push('android');
+            break;
 
-            // iron
-            case (is('iron/') || is('iron')):
-              v = (/iron\/(\d+)/.test(ua) ? ' iron' + RegExp.$1 : '');
-              r.push(w + ' iron' + v);
-              break;
+          // google chrome
+          case (is('chrome/') || is('chrome')):
+            version = (/chrome\/(\d+)/.test(ua) ? ' chrome' + RegExp.$1 : '');
+            rendered.push(webkit + ' chrome' + version);
+            break;
 
-            // google chrome
-            case (is('chrome/') || is('chrome')):
-              v = (/chrome\/(\d+)/.test(ua) ? ' chrome' + RegExp.$1 : '');
-              r.push(w + ' chrome' + v);
-              break;
+          // firefox
+          case (is('firefox/') || is('firefox')):
+            version = (/firefox\/(\d+)/.test(ua) ? ' firefox' + RegExp.$1 : '');
+            rendered.push(gecko + ' firefox' + version);
+            break;
 
-            // firefox
-            case (is('firefox/') || is('firefox')):
-              v = (/firefox\/(\d+)/.test(ua) ? ' firefox' + RegExp.$1 : '');
-              r.push(g + ' firefox' + v);
-              break;
+          // opera
+          case (is('opera/') || is('opera')):
+            version = (/version(\s|\/)(\d+)/.test(ua) || /opera(\s|\/)(\d+)/.test(ua) ? ' ' + opera + RegExp.$2 : '');
+            rendered.push(opera + version);
+            break;
 
-            // opera
-            case (is('opera') || is('opera/')):
-              v = (/version(\s|\/)(\d+)/.test(ua) || /opera(\s|\/)(\d+)/.test(ua) ? ' ' + o + RegExp.$2 : '');
-              r.push(o + v);
-              break;
+          // konqueror
+          case (is('konqueror')):
+            rendered.push(mobile + ' konqueror');
+            break;
 
-            // konqueror
-            case (is('konqueror')):
-              r.push('konqueror');
-              break;
+          // blackberry
+          case (is('blackberry') || is('bb')):
+            rendered.push(mobile + ' blackberry');
 
-            // blackberry
-            case (is('blackberry')):
-              r.push(m + ' blackberry');
-              break;
+            if (is('bb')) {
+              version = (/bb(\d{1,2})(\;{0,1})/.test(ua) ? 'bb' + RegExp.$1 : '');
+              rendered.push(version);
+            }
 
-            // android
-            case (is('android')):
+            break;
 
-              // according to some researches (http://stackoverflow.com/questions/14403766/how-to-detect-the-stock-android-browser)
-              // android stock (native) browsers never went above applewebkit/534.x, then, we can suppose user is using a
-              // native browser in android when the UA contains "android", "mobile", !"google" and !"windows"
+          // safari
+          case (is('safari/') || is('safari')):
+            version = (/version\/(\d+)/.test(ua) || /safari\/(\d+)/.test(ua) ? ' ' + safari + RegExp.$1 : '');
+            rendered.push(webkit + ' ' + safari + version);
+            break;
 
-              if (is('mobile') && !is('google') && !is('windows')) {
-                // get webkit version
-                var webkit = (/applewebkit\/(\d{1,})/.test(ua) ? RegExp.$1 : false);
+          // applewebkit
+          case (is('applewebkit/') || is('applewebkit')):
+            version = (/applewebkit\/(\d+)/.test(ua) ? ' ' + webkit + RegExp.$1 : '');
+            rendered.push(webkit + ' ' + version);
+            break;
 
-                if (webkit && webkit <= 534) {
-                  r.push('android-native');
-                }
+          // gecko || mozilla
+          case (is('gecko') || is('mozilla/')):
+            rendered.push(gecko);
+            break;
+        }
+
+        // *** Detecting O.S ***
+        switch ( true ) {
+
+          // ios
+          case (is('iphone') || is('ios')):
+            version = (/iphone\sos\s(\d{1,2})/.test(ua) ? ' ios' + RegExp.$1 : '');
+
+            // For some reason when it's iOS8, userAgent comes like OS 10_10
+            // what returns a wrong version, then we need to match it against
+            // another value
+            if (version === ' ios10') {
+              var vv = (/(\d{1,2})/.test(version) ? RegExp.$1 : 0);
+              var vd = (/\sversion\/(\d{1,2})/.test(ua) ? RegExp.$1 : '');
+
+              if (parseInt(vv) > parseInt(vd)) {
+                version = ' ios' + vd;
               }
+            }
 
-              r.push('android');
-              break;
+            rendered.push('ios' + version);
+            break;
 
-            // safari
-            case (is('safari/')):
-              v = (/version\/(\d+)/.test(ua) || /safari\/(\d+)/.test(ua) ? ' ' + s + RegExp.$1 : '');
-              r.push(w + ' ' + s + v);
-              break;
+          // macintosh
+          case (is('mac') || is('macintosh') || is('darwin')):
+            version = (/mac\sos\sx\s(\d{1,2}\_\d{1,2})/.test(ua) ? ' osx' + RegExp.$1 : '');
+            rendered.push('mac' + version);
+            break;
 
-            // applewebkit
-            case (is('applewebkit/') || is('applewebkit')):
-              v = (/applewebkit\/(\d+)/.test(ua) ? ' ' + w + RegExp.$1 : '');
-              r.push(w + ' ' + v);
-              break;
+          // windows
+          case (is('windows') || is('win')):
+            version = (/windows\s(nt\s{0,1})(\d{1,2}\.\d)/.test(ua) ? '' + RegExp.$2 : '');
 
-            // gecko || mozilla
-            case (is('gecko') || is('mozilla/')):
-              r.push(g);
-              break;
-          }
+            // defining windows version
+            switch ( version ) {
+              case '5.0':
+                version = ' win2k';
+                break;
+              case '5.01':
+                version = ' win2k sp1';
+                break;
+              case '5.1':
+              case '5.2':
+                version = ' xp';
+                break;
+              case '6.0':
+                version = ' vista';
+                break;
+              case '6.1':
+                version = ' win7';
+                break;
+              case '6.2':
+                version = ' win8';
+                break;
+              case '6.3':
+                version = ' win8_1';
+                break;
+              case '6.4':
+                version = ' win10';
+                break;
+              default:
+                version = ' nt nt' + version;
+            }
 
-          // *** detecting O.S ***
-          switch ( true ) {
-            // ios
-            case (is('iphone')):
-              v = (/iphone\sos\s(\d{1,2})/.test(ua) ? ' ios' + RegExp.$1 : '');
+            rendered.push('windows' + version);
+            break;
 
-              // For some reason when it's iOS8, userAgent comes like OS 10_10
-              // what returns a wrong version, then we need to match it against
-              // another value
-              if (v === ' ios10') {
-                var vv = (/(\d{1,2})/.test(v) ? RegExp.$1 : 0);
-                var vd = (/\sversion\/(\d{1,2})/.test(ua) ? RegExp.$1 : '');
+          // webtv
+          case (is('webtv')):
+            rendered.push('webtv');
+            break;
 
-                if (parseInt(vv) > parseInt(vd)) {
-                  v = ' ios' + vd;
-                }
-              }
+          // freebsd
+          case (is('freebsd')):
+            rendered.push('freebsd');
+            break;
 
-              r.push('ios' + v);
-              break;
+          // android
+          case (is('android') || (is('linux') && is('mobile'))):
+            rendered.push('android');
+            break;
 
-            // macintosh
-            case (is('mac') || is('macintosh') || is('darwin')):
-              v = (/mac\sos\sx\s(\d{1,2}\_\d{1,2})/.test(ua) ? ' osx' + RegExp.$1 : '');
-              r.push('mac' + v);
-              break;
+          // linux
+          case (is('linux') || is('x11')):
+            rendered.push('linux');
+            break;
+        }
 
-            // windows
-            case (is('windows') || is('win')):
-              v = (/windows\s(nt\s{0,1})(\d{1,2}\.\d)/.test(ua) ? '' + RegExp.$2 : '');
+        // *** Detecting platform ***
+        switch ( true ) {
+          // 64 bits
+          case (is('wow64') || is('x64')):
+            rendered.push('x64');
+            break;
 
-              // defining windows version
-              switch ( v ) {
-                case '5.0':
-                  v = ' win2k';
-                  break;
-                case '5.01':
-                  v = ' win2k sp1';
-                  break;
-                case '5.1':
-                case '5.2':
-                  v = ' xp';
-                  break;
-                case '6.0':
-                  v = ' vista';
-                  break;
-                case '6.1':
-                  v = ' win7';
-                  break;
-                case '6.2':
-                  v = ' win8';
-                  break;
-                case '6.3':
-                  v = ' win8_1';
-                  break;
-                case '6.4':
-                  v = ' win10';
-                  break;
-                default:
-                  v = ' nt nt' + v;
-              }
+          // arm
+          case (is('arm')):
+            rendered.push('arm');
+            break;
 
-              r.push('windows' + v);
-              break;
-            // webtv
-            case (is('webtv')):
-              r.push('webtv');
-              break;
-            // freebsd
-            case (is('freebsd')):
-              r.push('freebsd');
-              break;
-            // linux
-            case (is('linux') || 'x11'):
-              r.push('linux');
-              break;
-          }
+          // 32 bits
+          default:
+            rendered.push('x32');
+        }
 
-          // *** detecting platform ***
-          switch ( true ) {
-            // 64 bits
-            case (is('wow64') || is('x64')):
-              r.push('x64');
-              break;
-            // arm
-            case (is('arm')):
-              r.push('arm');
-              break;
-            // arm
-            default:
-              r.push('x32');
-          }
+        // *** Detecting devices ***
+        switch (true) {
 
-          // *** detecting devices ***
-          switch (true) {
-            case (is('j2me')):
-              r.push(m + ' j2me');
-              break;
-            case ( /(iphone|ipad|ipod)/.test(ua) ):
-              r.push(m + ' ' + RegExp.$1);
-              break;
-            case (is('mobile')):
-              r.push(m);
-              break;
-          }
+          case (is('j2me')):
+            rendered.push(mobile + ' j2me');
+            break;
 
-          // *** detecting touchable devices ***
-          if (/touch/.test(ua)) {
-            r.push('touch');
-          }
+          case ( /(iphone|ipad|ipod)/.test(ua) ):
+            rendered.push(mobile + ' ' + RegExp.$1);
+            break;
 
-          // *** assume that it supports javascript ***
-          r.push('js');
+          case (is('mobile')):
+            rendered.push(mobile);
+            break;
+        }
 
-          // *** detect if svg images are supported ***
-          r.push(i !== undefined && typeof i.hasFeature === 'function' && i.hasFeature("http://www.w3.org/TR/SVG11/feature#Image", "1.1") ? 'svg' : 'no-svg');
+        // *** Detecting touchable devices ***
+        if (/touch/.test(ua)) {
+          rendered.push('touch');
+        }
 
-          // *** detecting retina display ***
-          r.push($.devicePixelRatio !== undefined && $.devicePixelRatio > 1 ? 'retina' : 'no-retina');
+        // *** Assume that it supports javascript by default ***
+        rendered.push('js');
 
-          // *** detecting orientation ***
-          r.push(ww < wh ? 'portrait' : 'landscape');
+        // *** Detect if SVG images are supported ***
+        rendered.push(
+          implementation !== undefined &&
+          typeof implementation.hasFeature === 'function' &&
+          implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#Image", "1.1") ?
+            'svg' :
+            'no-svg'
+        );
 
-          return r;
-        };
+        // *** Detect retina display ***
+        rendered.push($.devicePixelRatio !== undefined && $.devicePixelRatio > 1 ? 'retina' : 'no-retina');
 
-    // convert b from function to array to avoid unnecessary processing
-    b = b();
+        // *** Detecting orientation ***
+        rendered.push(winWidth < winHeight ? 'portrait' : 'landscape');
+
+        return rendered;
+      };
+
+    // convert 'detect' from function to array
+    // and avoid unnecessary processing
+    detect = detect();
 
     // inject the information in the HTML tag
-    h.className = h.className.split(' ').concat(b).join(' ').trim();
+    element.className = element.className.split(' ').concat(detect).join(' ').trim();
 
     // return what was detected
-    return b.join(' ').trim();
+    return detect.join(' ').trim();
   };
 
+  // make detectr return available on global scope of console.
   window.detectr = detectr($.navigator.userAgent);
 
 }(window));

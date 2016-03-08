@@ -48,6 +48,7 @@
       .purple { background-color: purple; }
       .gray { background-color: #e2e2e2;}
 
+      .sample::before { content: "Unknown browser"}
       .chrome .sample { background-color: green; color: white;}
       .chrome .sample::before { content: "Chrome"; }
       .firefox .sample { background-color: orange;}
@@ -58,8 +59,8 @@
       .safari .sample::before { content: "Safari"; }
       .opera .sample { background-color: red; color: white;}
       .opera .sample::before { content: "Opera"; }
-      .android.android-native .sample { background-color: purple; color: white;}
-      .android.android-native .sample::before { content: "Android Stock (Native)"; }
+      .android.android-browser .sample { background-color: purple; color: white;}
+      .android.android-browser .sample::before { content: "Android Stock Browser (Native)"; }
     </style>
   </head>
   <body >
@@ -120,7 +121,7 @@
             </tr>
             <tr>
               <td class="purple" >&nbsp;</td>
-              <td >Android Stock (Native)</td>
+              <td >Android Stock Browser (Native)</td>
             </tr>
             <tr>
               <td class="gray" >&nbsp;</td>
@@ -139,7 +140,7 @@
 
         <p >
           Copy the code above and <a href="https://github.com/rogeriotaques/detectr.js/issues"
-          target="_blank" >open an issue on Github</a>,<br >telling me what CSS rules
+          target="_blank" >open an issue on Github</a>, telling me what CSS rules
           are expected to be defined.
         </p>
       </fieldset>
