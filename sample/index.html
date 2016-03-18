@@ -76,6 +76,7 @@
 
       <p >
         by Rogerio Taques. <br >
+        @version <span id="plugin-version" >#</span> <br >
         @see <a href="http://github.com/rogeriotaques/detectr.js" >http://github.com/rogeriotaques/detectr.js</a>
       </p>
 
@@ -148,7 +149,8 @@
 
     <script type="text/javascript">
       document.getElementById('debug').innerHTML = window.navigator.userAgent;
-      document.getElementById('rendered').innerHTML = '.' + window.detectr.split(' ').join(' .');
+      document.getElementById('rendered').innerHTML = '.' + window.detectr.detected.split(' ').join(' .');
+      document.getElementById('plugin-version').innerHTML = window.detectr.version;
     </script>
   </body>
 </html>

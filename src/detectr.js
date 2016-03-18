@@ -2,7 +2,7 @@
 * Detectr.js
 * @author Rogerio Taques (rogerio.taques@gmail.com)
 * @see http://github.com/rogeriotaques/detectrjs
-* @version 1.4
+* @version 1.5
 *
 * This project is based on the Rafael Lima's work
 * which is called css_browser_selector and seems
@@ -11,7 +11,7 @@
 
 /*
  * Release notes
- * v1.4 - Bug fix for detecting Android Stock Browser and some improvements
+ * v1.4 ~ v1.5 - Bug fixes for detecting Android Stock Browser and some improvements
  * v1.3 - Start detecting Android Stock Browser
  * v1.2 - Start detecting when device runs iOS
  * v1.1 - Added support for Microsoft Edge
@@ -45,6 +45,8 @@ SOFTWARE.
 (function ($) {
 
   "use strict";
+
+  var version = '1.5';
 
   /**
    * Whenever .trim() isn't supported, makes it be.
@@ -88,7 +90,8 @@ SOFTWARE.
         var
           rendered = [],
           version = '',
-          implementation = doc.implementation;
+          implementation = doc.implementation,
+          webkitVersion = (/applewebkit\/(\d{1,})/.test(ua) ? RegExp.$1 : false);
 
         // *** Detecting browsers ***
         switch ( true ) {
@@ -114,22 +117,13 @@ SOFTWARE.
             break;
 
           // android
-          case (is('android') || (is('linux') && is('mobile'))):
+          case (is('android') && is('u;') && (!is('chrome') || is('chrome') && webkitVersion && webkitVersion <= 534)):
 
             // according to some researches (http://stackoverflow.com/questions/14403766/how-to-detect-the-stock-android-browser)
-            // android stock (native) browsers never went above applewebkit/537.x, then, we can suppose user is using a
-            // native browser in android when the UA contains "android", "mobile", !"google" and !"windows"
+            // android stock (native) browsers never went above applewebkit/534.x, then, we can suppose user is using a
+            // native browser in android when the UA contains "android", "mobile" and "U;" strings
 
-            if (is('mobile') && !is('google') && !is('windows')) {
-              // get webkit version
-              var wk = (/applewebkit\/(\d{1,})/.test(ua) ? RegExp.$1 : false);
-
-              if (wk && wk < 538) {
-                rendered.push('android-browser');
-              }
-            }
-
-            // rendered.push('android');
+            rendered.push('android-browser');
             break;
 
           // google chrome
@@ -338,7 +332,10 @@ SOFTWARE.
     element.className = element.className.split(' ').concat(detect).join(' ').trim();
 
     // return what was detected
-    return detect.join(' ').trim();
+    return {
+      'detected': detect.join(' ').trim(),
+      'version': version
+    };
   };
 
   // make detectr return available on global scope of console.
