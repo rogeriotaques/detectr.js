@@ -2,7 +2,7 @@
 * Detectr.js
 * @author Rogerio Taques (rogerio.taques@gmail.com)
 * @see http://github.com/rogeriotaques/detectrjs
-* @version 1.5
+* @version 1.6
 *
 * This project is based on the Rafael Lima's work
 * which is called css_browser_selector and seems
@@ -11,6 +11,7 @@
 
 /*
  * Release notes
+ * v1.6 - Add a listener to reanalyse page on resize event
  * v1.4 ~ v1.5 - Bug fixes for detecting Android Stock Browser and some improvements
  * v1.3 - Start detecting Android Stock Browser
  * v1.2 - Start detecting when device runs iOS
@@ -46,7 +47,7 @@ SOFTWARE.
 
   "use strict";
 
-  var version = '1.5';
+  var version = '1.6';
 
   /**
    * Whenever .trim() isn't supported, makes it be.
@@ -59,11 +60,16 @@ SOFTWARE.
 
   }
 
-  var detectr = function (userAgent) {
+  var
+    doc = $.document,
+    element = doc.documentElement,
+    detectr,
+    originalClassNames,
+    resizing;
+
+  detectr = function (userAgent) {
 
     var
-      doc = $.document,
-      element = doc.documentElement,
       ua = userAgent.toLowerCase(),
       winWidth = $.outerWidth || element.clientWidth,
       winHeight = $.outerHeight || element.clientHeight,
@@ -102,7 +108,7 @@ SOFTWARE.
             if (is('edge')) {
               version = (/edge\/(\w+)/.test(ua) ? ' edge ie' + RegExp.$1 : ' ie11');
             } else if (is('msie 8.0') || is('trident/7.0')) {
-              version = ' ie11'
+              version = ' ie11';
             } else {
               version = (/msie\s(\d+)/.test(ua) ? ' ie' + RegExp.$1 : '');
             }
@@ -321,6 +327,7 @@ SOFTWARE.
         // *** Detecting orientation ***
         rendered.push(winWidth < winHeight ? 'portrait' : 'landscape');
 
+
         return rendered;
       };
 
@@ -329,7 +336,7 @@ SOFTWARE.
     detect = detect();
 
     // inject the information in the HTML tag
-    element.className = element.className.split(' ').concat(detect).join(' ').trim();
+    element.className  = element.className.split(' ').concat(detect).join(' ').trim();
 
     // return what was detected
     return {
@@ -339,6 +346,24 @@ SOFTWARE.
   };
 
   // make detectr return available on global scope of console.
+  originalClassNames = element.className;
   window.detectr = detectr($.navigator.userAgent);
+
+  /**
+   * The listener engine for resize event ...
+   */
+  resizing = function (event) {
+    element.className = originalClassNames;
+    window.detectr = detectr($.navigator.userAgent);
+  };
+
+  // add an event listener for window resize
+  // which will asure that references will be
+  // updated in case of browser resizing
+  if (window.attachEvent) {
+    window.attachEvent('onresize', resizing);
+  } else if (window.addEventListener) {
+    window.addEventListener('resize', resizing, true);
+  }
 
 }(window));

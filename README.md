@@ -1,4 +1,4 @@
-# Detectr.js (beta) v1.4
+# Detectr.js (beta) v1.6
 
 Empower web sites and apps design through clever CSS selectors.
 
