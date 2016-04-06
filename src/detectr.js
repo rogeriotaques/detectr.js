@@ -2,7 +2,7 @@
 * Detectr.js
 * @author Rogerio Taques (rogerio.taques@gmail.com)
 * @see http://github.com/rogeriotaques/detectrjs
-* @version 1.6
+* @version 1.7
 *
 * This project is based on the Rafael Lima's work
 * which is called css_browser_selector and seems
@@ -11,6 +11,7 @@
 
 /*
  * Release notes
+ * v1.7 - Fixed a small bug regarding global variable
  * v1.6 - Add a listener to reanalyse page on resize event
  * v1.4 ~ v1.5 - Bug fixes for detecting Android Stock Browser and some improvements
  * v1.3 - Start detecting Android Stock Browser
@@ -44,10 +45,9 @@ SOFTWARE.
 */
 
 (function ($) {
-
   "use strict";
 
-  var version = '1.6';
+  var version = '1.7';
 
   /**
    * Whenever .trim() isn't supported, makes it be.
@@ -327,7 +327,6 @@ SOFTWARE.
         // *** Detecting orientation ***
         rendered.push(winWidth < winHeight ? 'portrait' : 'landscape');
 
-
         return rendered;
       };
 
@@ -347,23 +346,22 @@ SOFTWARE.
 
   // make detectr return available on global scope of console.
   originalClassNames = element.className;
-  window.detectr = detectr($.navigator.userAgent);
+  $.detectr = detectr($.navigator.userAgent);
 
   /**
    * The listener engine for resize event ...
    */
   resizing = function (event) {
     element.className = originalClassNames;
-    window.detectr = detectr($.navigator.userAgent);
+    $.detectr = detectr($.navigator.userAgent);
   };
 
   // add an event listener for window resize
   // which will asure that references will be
   // updated in case of browser resizing
-  if (window.attachEvent) {
-    window.attachEvent('onresize', resizing);
-  } else if (window.addEventListener) {
-    window.addEventListener('resize', resizing, true);
+  if ($.attachEvent) {
+    $.attachEvent('onresize', resizing);
+  } else if ($.addEventListener) {
+    $.addEventListener('resize', resizing, true);
   }
-
 }(window));
