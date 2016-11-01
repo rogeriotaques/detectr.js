@@ -1,4 +1,6 @@
-# Detectr.js (beta) v1.7
+# Detectr.js
+
+[![Latest Version](https://img.shields.io/github/release/rogeriotaques/detectr.js.svg)](https://github.com/rogeriotaques/detectr.js/releases)
 
 Empower web sites and apps design through clever CSS selectors.
 
@@ -6,14 +8,14 @@ This plugin is a very small javascript library which gives you the ability to
 write clever and specific CSS rules to refine your website design for each
 different browser, platform, device and operating system.
 
-It doesn't has any library dependencies such as: jQuery, Mootools, (...). So,
-you can use it alone, or combined with those packages.
+*It has a really small footprint and doesn't have any library dependencies such as: jQuery, Mootools, (...). So,
+you can use it alone, or combined with those packages.*
 
 ## Get started
 
 ### 1. Get the source code
 
-Start cloning this repository to your local machine, or just download the
+Start by cloning this repository to your local machine, or just download the
 source-code into any folder of your PC. As an open-source, the source-code is
 available in its natural format and minified.
 
