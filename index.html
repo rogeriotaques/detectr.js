@@ -1,157 +1,282 @@
 <!DOCTYPE html>
-
-<html lang="en" class="some-class-1 another-custom-class" >
+<html lang="en">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Detectr.js - Sample page.</title>
-
-    <script type="text/javascript" src="src/detectr.min.js"></script>
-
-    <style type="text/css" >
-
-      table td:first-child {
-        width: 20px;
-      }
-
-      .container {
-        width: 95%;
-        max-width: 700px;
-        margin: 0 auto;
-      }
-
-      .sample {
-        margin: 20px;
-        height: 50px;
-        line-height: 50px;
-        padding: 0 20px;
-        background-color: #e2e2e2;
-        border: 1px solid #ccc;
-        border-radius: 3px;
-        box-shadow: #888 1px 2px 4px;
-      }
-
-      #debug {
-        border: 1px solid #ccc;
-        font-family: monospace;
-        border-radius: 3px;
-        padding: 20px;
-        background-color: #f5f5f5;
-        margin: 20px 0;
-      }
-
-      .green { background-color: green; }
-      .orange { background-color: orange; }
-      .blue { background-color: blue; }
-      .lightblue { background-color: lightblue; }
-      .red { background-color: red; }
-      .purple { background-color: purple; }
-      .gray { background-color: #e2e2e2;}
-
-      .sample::before { content: "Unknown browser"}
-      .chrome .sample { background-color: green; color: white;}
-      .chrome .sample::before { content: "Chrome"; }
-      .firefox .sample { background-color: orange;}
-      .firefox .sample::before { content: "Firefox"; }
-      .ie .sample { background-color: blue; color: white;}
-      .ie .sample::before { content: "Internet Explorer"; }
-      .safari .sample { background-color: lightblue;}
-      .safari .sample::before { content: "Safari"; }
-      .opera .sample { background-color: red; color: white;}
-      .opera .sample::before { content: "Opera"; }
-      .android.android-browser .sample { background-color: purple; color: white;}
-      .android.android-browser .sample::before { content: "Android Stock Browser (Native)"; }
-    </style>
+    <title>Detectr.js | Empowering website designs.</title>
+    <meta name="description" content="Empower web sites and apps design through clever CSS selectors.">
+    <meta name="keywords" content="css,javascript,html5,website,site,app,webapp,build,development">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="author" content="Rogerio Taques (https://abtz.co)">
+    <meta name="copyright" content="Rogerio Taques">
+    <meta name="license" content="BSD">
+    <meta name="project-id" content="detectr.js">
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Raleway:400,300,600">
+    <link rel="stylesheet" type="text/css" href="//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" type="text/css" href="css/bundle.css?v=1.0.4">
   </head>
-  <body >
-
-    <div class="container" >
-      <h1 >Detectr.js Sample Page</h1>
-
-      <p >
-        This plugin is a very small javascript library which gives you the ability
-        to write clever and specific CSS rules to refine your website design for
-        each different browser, platform, device and operating system.
-      </p>
-
-      <p >
-        by Rogerio Taques. <br >
-        @version <span id="plugin-version" >#</span> <br >
-        @see <a href="http://github.com/rogeriotaques/detectr.js" >http://github.com/rogeriotaques/detectr.js</a>
-      </p>
-
-      <div class="sample"></div>
-
-      <fieldset >
-        <legend >Rendered classes</legend>
-        <div id="rendered" ></div>
-      </fieldset>
-
-      <br  />
-
-      <fieldset >
-        <legend >Description</legend>
-
-        <p >
-          You might see the above box in different colors, accordin on the
-          browser you're using. Check in the table below if the color you're
-          seeing matches with the browser you're using.
-        </p>
-
-        <table >
-          <tbody >
-            <tr>
-              <td class="green" >&nbsp;</td>
-              <td >Google Chrome</td>
-            </tr>
-            <tr>
-              <td class="orange" >&nbsp;</td>
-              <td >Firefox</td>
-            </tr>
-            <tr>
-              <td class="blue" >&nbsp;</td>
-              <td >Microsoft Internet Explorer</td>
-            </tr>
-            <tr>
-              <td class="lightblue" >&nbsp;</td>
-              <td >Safari</td>
-            </tr>
-            <tr>
-              <td class="red" >&nbsp;</td>
-              <td >Opera</td>
-            </tr>
-            <tr>
-              <td class="purple" >&nbsp;</td>
-              <td >Android Stock Browser (Native)</td>
-            </tr>
-            <tr>
-              <td class="gray" >&nbsp;</td>
-              <td >Any other browser ...</td>
-            </tr>
-          </tbody>
-        </table>
-
-        <p >
-          Are you not seeing the correct color in the sample box? <br >
-        </p>
-
-        <p id="debug" >
-          #debug
-        </p>
-
-        <p >
-          Copy the code above and <a href="https://github.com/rogeriotaques/detectr.js/issues"
-          target="_blank" >open an issue on Github</a>, telling me what CSS rules
-          are expected to be defined.
-        </p>
-      </fieldset>
+  <body>
+    <header>
+      <div class="container"> 
+        <div id="hamburger-menu"><span class="icon ion-navicon"></span></div>
+        <h1>Detectr.js</h1>
+        <p>Empower web sites and apps design through clever CSS selectors.</p>
+        <p><img class="release-shild" src="https://img.shields.io/github/release/rogeriotaques/detectr.js.svg" alt=""></p>
+      </div>
+    </header>
+    <main>
+      <div class="container">
+        <div class="unreacheable-server hide">
+          <p>Oops! Seems that my server isn't reacheable now. Some features from this sample page might not work correctly. I'm sorry about that.</p>
+        </div>
+        <div class="ads">
+          <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3389659365097419" data-ad-slot="4092379267" data-ad-format="auto"></ins>
+          <script>
+            (adsbygoogle=window.adsbygoogle || []).push({});
+            
+          </script>
+        </div>
+        <div class="sample-content">
+          <div class="sample"> </div>
+              <div id="fork-block">
+                <div class="align-center">
+                  <p> <a class="btn btn-primary btn-xl" href="http://github.com/rogeriotaques/detectr.js"> <span>(CLONE || FORK) ME ON GITHUB</span><span>&nbsp;</span><span class="icon ion-social-github"></span></a><br><a href="http://github.com/rogeriotaques/detectr.js">http://github.com/rogeriotaques/detectr.js</a></p>
+                </div>
+              </div>
+          <p>
+            Detectr.js is a very small javascript library which gives you the ability
+            to write clever and specific CSS rules to refine your website design for
+            each different browser, platform, device and operating system.
+            
+          </p>
+          <fieldset>
+            <legend>Rendered classes for this page </legend>
+            <div id="rendered"></div>
+          </fieldset><br>
+          <p>
+            You might see the head box in different colors, according on the
+            browser you're visiting this page. Check in the table below if the color you're
+            seeing matches with the browser you're using.
+            
+          </p>
+          <table>
+            <thead>
+              <tr> 
+                <th colspan="2">Browser colors</th>
+              </tr>
+            </thead>
+            <tbody> 
+              <tr>
+                <td class="green">&nbsp;</td>
+                <td>Google Chrome</td>
+              </tr>
+              <tr>
+                <td class="orange">&nbsp;</td>
+                <td>Firefox</td>
+              </tr>
+              <tr>
+                <td class="blue">&nbsp;</td>
+                <td>Microsoft Internet Explorer</td>
+              </tr>
+              <tr>
+                <td class="lightblue">&nbsp;</td>
+                <td>Safari</td>
+              </tr>
+              <tr>
+                <td class="red">&nbsp;</td>
+                <td>Opera</td>
+              </tr>
+              <tr>
+                <td class="purple">&nbsp;</td>
+                <td>Android Stock Browser (Native)</td>
+              </tr>
+              <tr>
+                <td class="grey">&nbsp;</td>
+                <td>Any other browser ...</td>
+              </tr>
+            </tbody>
+            <p>Are you not seeing the correct color in the sample box?</p>
+            <p id="debug">#debug</p>
+            <p>
+              Copy the code above and <a href="https://github.com/rogeriotaques/detectr.js/issues"
+              target="_blank" >open an issue on Github</a>, telling me what CSS rules
+              are expected to be defined.
+            </p>
+          </table>
+        </div>
+      </div>
+    </main>
+    <section id="feedback">
+      <div class="container align-center">
+        <h3>Has this project helped you?</h3>
+        <div class="cta"><a class="btn btn-outline-primary" href="#!" data-modal="#feedback-modal-like" data-action="like"> <span class="icon ion-heart">&nbsp;</span><span>Yes, I loved it.</span></a><a class="btn btn-outline-red" href="#!" data-modal="#feedback-modal-dislike" data-action="dislike"> <span class="icon ion-heart-broken hide-on-medium-and-up">&nbsp;</span><span>Nop, it sucks. &nbsp;</span><span class="icon ion-heart-broken hide-only-small"></span></a></div>
+        <div class="message align-center hide"> 
+          <h4 class="success">Thank you for your feedback. </h4>
+        </div>
+      </div>
+    </section>
+    <div class="hide" id="feedback-modal">
+      <div class="modal-window"> 
+        <div class="header">
+          <h3>Sample header </h3>
+          <p>Sample additional information</p>
+        </div>
+        <div class="body"> 
+          <div class="body-content">
+            <p>Sample content ...</p>
+          </div>
+        </div>
+      </div>
     </div>
-
-    <script type="text/javascript">
-      document.getElementById('debug').innerHTML = window.navigator.userAgent;
-      document.getElementById('rendered').innerHTML = '.' + window.detectr.detected.split(' ').join(' .');
-      document.getElementById('plugin-version').innerHTML = window.detectr.version;
+    <footer>
+      <div class="container">
+        <p> <span>Made with   </span><span><span>&nbsp;</span><span class="icon ion-ios-heart-outline"> </span><span>&nbsp;</span><br class="hide-on-medium-and-up"></span><span>by Rogerio Taques, from Japan.</span></p>
+        <p> <span> <span class="icon ion-ios-world-outline"></span><span>&nbsp;</span><a href="https://abtz.co?ref=detectr.js" target="_blank">https://abtz.co</a></span><br><span> <span class="icon ion-social-twitter-outline"></span><span>&nbsp;</span><a href="https://twitter.com/rogeriotaques">@rogeriotaques </a></span></p>
+      </div>
+    </footer>
+    <div class="hide" id="other-projects">
+      <div class="container"> 
+        <div class="header align-center"> 
+          <div class="close"><span class="icon ion-close"></span></div>
+          <h3>Other projects that might interest you </h3>
+        </div>
+        <div class="content">
+          <ul class="list">
+            <li class="item"><a href="#!"><span> <span class="bullet"><span class="dot"></span></span><span class="text">
+                    <p>Loading ...</p></span></span></a></li>
+          </ul>
+        </div>
+      </div>
+    </div><span>&nbsp;</span>
+    <script type="text/javascript" src="js/bundle.js?v=1.0.4"></script>
+    <script type="text/template" id="other-project-item">
+      <li class="item"><a class="target" href="#!"><span> <span class="bullet"><span class="dot"></span></span><span class="text">
+              <h4 class="title">Project name goes here ...</h4>
+              <p class="description">A project short description goes here ...</p></span><span class="arrow"><span class="icon ion-chevron-right"></span></span></span></a></li>
+    </script>
+    <script type="text/template" id="feedback-modal-like">
+      <div class="header">
+        <h3 class="success">Greate! I loved that. </h3>
+        <p>It's amazing have you using it.</p>
+      </div>
+      <div class="body"> 
+        <div class="body-content align-center">
+          <h5>Would you like to support this project?</h5>
+          <div class="donation">
+            <div class="donation-form">
+              <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+                <h5>Why don't you send your love? <br ></h5>
+                <div class="field-group">
+                  <div class="field seed-select">
+                    <select name="os0">
+                      <option value="Small">Modest ¥399 (~ US$ 3.99)</option>
+                      <option value="Medium">Prefered ¥1,000 (~ US$ 10.00)</option>
+                      <option value="Big">Generous ¥1,999 (~ US$ 19.99)</option>
+                    </select>
+                  </div>
+                  <button class="btn btn-primary" type="submit">Donate</button>
+                </div><img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+                <input type="hidden" name="cmd" value="_s-xclick">
+                <input type="hidden" name="hosted_button_id" value="DD2FN2RTGURA2">
+                <input type="hidden" name="currency_code" value="JPY">
+              </form>
+            </div>
+          </div>
+          <div class="get-involved">
+            <h5>You can also contribute coding ...</h5>
+            <p>Feel free to send me pull requests for this project with your contributions (improvements, bug fixes, etc).</p>
+          </div>
+          <button class="flat-btn" role="close">No, I'm good. </button>
+        </div>
+      </div>
+    </script>
+    <script type="text/template" id="feedback-modal-dislike">
+      <div class="dislike-steps" id="dislike-step-0">
+        <div class="header">
+          <h3 class="fail">Oh! I'm sorry to hear that. </h3>
+          <p>I'm really sad for your bad experience.</p>
+        </div>
+        <div class="body"> 
+          <div class="body-content">
+            <h5 class="align-center">Would you mind to help me make it better? </h5>
+            <button class="btn-primary" role="next" data-step="1">Tell me what you have disliked</button>
+            <button class="flat-btn" role="close">Ignore</button>
+          </div>
+        </div>
+      </div>
+      <form method="post" name="dislike-report" id="dislike-report">
+        <div class="dislike-steps hide" id="dislike-step-1">
+          <div class="header">
+            <h3 class="fail">What did you dislike? </h3>
+            <p>Tell me what've made you have the bad experience.</p>
+          </div>
+          <div class="body"> 
+            <div class="body-content">
+              <div> 
+                <div class="field">
+                  <textarea name="dislike-comment" id="dislike-comment"></textarea>
+                </div>
+              </div>
+              <div class="grid" id="modal-action-buttons">
+                <div class="row">
+                  <div class="col sm-6">
+                    <button class="flat-btn" data-step="0" role="back">Back</button>
+                  </div>
+                  <div class="col sm-6">
+                    <button class="btn-primary" data-step="2" role="next" data-required="#dislike-comment">Next</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="dislike-steps hide" id="dislike-step-2">
+          <div class="header">
+            <h3 class="fail">Whould you like me to get in touch with you? </h3>
+            <p>Optional. Let fields empty if not.</p>
+          </div>
+          <div class="body"> 
+            <div class="body-content">
+              <div> 
+                <div class="field">
+                  <label for="name">Your name</label>
+                  <input type="text" name="name" id="name" placeholder="E.g: Rogerio Taques" maxlength="60">
+                </div>
+                <div class="field">
+                  <label for="email">Email address</label>
+                  <input type="email" name="email" id="email" placeholder="E.g: name@domain.tld" maxlength="120">
+                </div>
+              </div>
+              <div class="grid" id="modal-action-buttons">
+                <div class="row">
+                  <div class="col sm-6">
+                    <button class="flat-btn" data-step="1" role="back">Back</button>
+                  </div>
+                  <div class="col sm-6">
+                    <button class="btn-primary" data-step="3" role="next">Send</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="dislike-steps hide" id="dislike-step-3">
+          <div class="header">
+            <h3 class="success">Thank you! </h3>
+            <p>I really appreciate your feedback.</p>
+          </div>
+          <div class="body"> 
+            <div class="body-content">
+              <p class="submit-report align-center">Sending your report, please wait...</p>
+              <div class="hide"> 
+                <h5 class="align-center">Would you like to see other projects? </h5>
+                <button class="btn-primary" role="open-project-menu">Yes, show me</button>
+                <button class="flat-btn" role="close">Nop. I'm good</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
     </script>
   </body>
 </html>
