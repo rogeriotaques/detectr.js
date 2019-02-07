@@ -21,7 +21,9 @@ available in its natural format and minified.
 
 or simply run this command in your terminal
 
-`sh $ npm install -S detectr.js`
+```sh
+$ npm install -S detectr.js
+```
 
 ### 2. Copy necessary files
 
