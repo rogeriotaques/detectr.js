@@ -1,0 +1,34 @@
+{
+  "name": "detectr.js",
+  "version": "1.8.0",
+  "description": "Empowers websites with target classes to be stylized.",
+  "main": "dist/detectr.js",
+  "scripts": {
+    "build": "parcel build src/detectr.js --no-cache"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rogeriotaques/detectr.js.git"
+  },
+  "keywords": [
+    "css",
+    "html",
+    "design",
+    "development",
+    "app",
+    "style"
+  ],
+  "author": "Rogerio Taques (rogerio.taques@gmail.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rogeriotaques/detectr.js/issues"
+  },
+  "homepage": "https://github.com/rogeriotaques/detectr.js#readme",
+  "devDependencies": {
+    "eslint": "^5.13.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-config-prettier-airbnb": "^0.3.0",
+    "eslint-plugin-import": "^2.16.0",
+    "parcel-bundler": "^1.11.0"
+  }
+}
