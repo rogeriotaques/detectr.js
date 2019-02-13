@@ -3,10 +3,13 @@
     "browser": true,
     "node": true
   },
-  "extends": ["prettier-airbnb"],
+  "extends": [
+    "prettier-airbnb"
+  ],
   "rules": {
     "no-extra-semi": "off",
     "operator-linebreak": "off",
+    "object-curly-spacing": "off",
     "prefer-template": "off",
     "space-before-function-paren": "off",
     "wrap-iife": "off"

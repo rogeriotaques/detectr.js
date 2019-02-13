@@ -8,8 +8,8 @@
  * to be discontinued. (http://rafael.adm.br/css_browser_selector/).
  */
 
-;(function detecterjs($) {
-  const version = '1.8.0'
+const DetectrJs = (function detecterjs($) {
+  const version = '1.8.1'
 
   /**
    * Whenever .trim() isn't supported, makes it be.
@@ -48,7 +48,7 @@
      */
     let detect = function detect() {
       const rendered = []
-      const {implementation} = doc
+      const { implementation } = doc
       const webkitVersion = /applewebkit\/(\d{1,})/.test(ua) ? RegExp.$1 : false
 
       let sysVersion = ''
@@ -289,16 +289,20 @@
       return rendered
     }
 
+    // retrieve current classes attached
+    let currentClassNames = doc.documentElement.className.split(' ')
+
     // convert 'detect' from function to array
     // and avoid unnecessary processing
     detect = detect()
 
-    // inject the information in the HTML tag.
-    // getting the classes list from the original documentElement
-    // helps prevent wiping classes included while detectr.js execution.
-    element.className = doc.documentElement.className
-      .split(' ')
-      .concat(detect)
+    // concat all detected classes to the existing ones and make sure they are unique
+    // this prevent wiping pre-existing classes attached by different processes.
+    currentClassNames = currentClassNames.concat(detect)
+    currentClassNames = currentClassNames.filter((v, i) => currentClassNames.indexOf(v) === i)
+
+    // inject the new classes set in the HTML tag.
+    element.className = currentClassNames
       .join(' ')
       .trim()
 
@@ -309,9 +313,6 @@
     }
   }
 
-  // make detectr return available on global scope of console.
-  const originalClassNames = element.className
-
   // execute and exposes detectr.js to the browser
   // eslint-disable-next-line
   $.detectr = detectr($.navigator.userAgent)
@@ -320,7 +321,6 @@
    * The listener engine for resize event ...
    */
   const resizing = function resizing() {
-    element.className = originalClassNames
     $.detectr = detectr($.navigator.userAgent) // eslint-disable-line
   }
 
@@ -332,4 +332,8 @@
   } else if ($.addEventListener) {
     $.addEventListener('resize', resizing, true)
   }
-})(window)
+})
+
+DetectrJs(window)
+
+export default DetectrJs

@@ -1,6 +1,6 @@
 {
   "name": "detectr.js",
-  "version": "1.8.0",
+  "version": "1.8.1",
   "description": "Empowers websites with target classes to be stylized.",
   "main": "dist/detectr.js",
   "scripts": {
