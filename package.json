@@ -1,10 +1,10 @@
 {
   "name": "detectr.js",
-  "version": "1.8.1",
+  "version": "1.8.2",
   "description": "Empowers websites with target classes to be stylized.",
   "main": "dist/detectr.js",
   "scripts": {
-    "build": "parcel build src/detectr.js --no-cache"
+    "build": "NODE_ENV=production gulp build"
   },
   "repository": {
     "type": "git",
@@ -25,10 +25,17 @@
   },
   "homepage": "https://github.com/rogeriotaques/detectr.js#readme",
   "devDependencies": {
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.3.1",
+    "babel-loader": "^8.0.5",
     "eslint": "^5.13.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-config-prettier-airbnb": "^0.3.0",
     "eslint-plugin-import": "^2.16.0",
-    "parcel-bundler": "^1.11.0"
+    "gulp": "^4.0.0",
+    "gulp-eslint": "^5.0.0",
+    "path": "^0.12.7",
+    "vinyl-named": "^1.1.0",
+    "webpack-stream": "^5.2.1"
   }
 }
